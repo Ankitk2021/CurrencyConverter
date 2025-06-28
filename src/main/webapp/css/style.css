@@ -1,0 +1,415 @@
+@charset "UTF-8";
+
+/* Global Reset & Box-Sizing */
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* CSS Variables for Easy Theming */
+:root {
+	/* Color Palette */
+	--primary-accent: #6c5ce7;
+	/* A vibrant yet calm purple-blue */
+	--secondary-accent: #a29bfe;
+	/* Lighter shade for gradients */
+	--text-primary: #2d3436;
+	/* Dark charcoal */
+	--text-secondary: #636e72;
+	/* Muted grey */
+	--text-light: #b2bec3;
+	/* Very light grey */
+	--background-light: #dfe6e9;
+	/* Off-white for general background */
+	--card-bg: #fdfdfd;
+	/* Near white for card */
+	--border-color: #dcdcdc;
+	/* Light border */
+	--focus-glow: rgba(108, 92, 231, 0.2);
+	/* Soft glow for focus */
+	--button-hover: #5a4db8;
+
+	/* Typography */
+	--font-primary: 'Inter', sans-serif;
+
+	/* Spacing & Radii */
+	--spacing-xs: 4px;
+	--spacing-sm: 8px;
+	--spacing-md: 20px;
+	--spacing-lg: 24px;
+	--spacing-xl: 32px;
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 20px;
+}
+
+/* Base Body Styles - Soothing Background with Subtle Animation */
+body {
+	font-family: var(--font-primary);
+	color: var(--text-primary);
+	background: linear-gradient(135deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: var(--spacing-lg);
+	overflow: hidden;
+	/* Important for background elements */
+	position: relative;
+	font-weight: 400;
+	line-height: 1.6;
+}
+
+/* Background Animated Shapes (Glassmorphism inspired) */
+body::before,
+body::after {
+	content: '';
+	position: absolute;
+	background: rgba(255, 255, 255, 0.15);
+	/* Slightly more opaque for better visual */
+	backdrop-filter: blur(25px);
+	/* Stronger blur for glass effect */
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	/* Subtle border for definition */
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	/* Soft inner shadow */
+	z-index: -1;
+	animation-duration: 15s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+body::before {
+	width: 250px;
+	height: 250px;
+	top: 10%;
+	left: 10%;
+	animation-name: floatShape1;
+}
+
+body::after {
+	width: 300px;
+	height: 300px;
+	bottom: 15%;
+	right: 15%;
+	animation-name: floatShape2;
+	animation-delay: -7s;
+	/* Stagger animation start */
+}
+
+@keyframes floatShape1 {
+
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(0deg);
+	}
+
+	25% {
+		transform: translate(30px, 40px) rotate(15deg);
+	}
+
+	50% {
+		transform: translate(-20px, 20px) rotate(-10deg);
+	}
+
+	75% {
+		transform: translate(25px, -30px) rotate(5deg);
+	}
+}
+
+@keyframes floatShape2 {
+
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(0deg);
+	}
+
+	25% {
+		transform: translate(-20px, -30px) rotate(-12deg);
+	}
+
+	50% {
+		transform: translate(15px, 10px) rotate(8deg);
+	}
+
+	75% {
+		transform: translate(-10px, 25px) rotate(-4deg);
+	}
+}
+
+/* App Container */
+.app-container {
+	width: 100%;
+	max-width: 480px;
+	/* Slightly wider for a more spacious feel */
+	padding: var(--spacing-md);
+}
+
+/* Converter Card - Central Focus */
+.converter-card {
+	background: var(--card-bg);
+	padding: var(--spacing-xl);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
+	/* Multi-layer shadow for depth */
+	text-align: center;
+	border: 1px solid var(--border-color);
+	/* Clean, crisp border */
+	transition: transform 0.3s ease-in-out;
+	/* Subtle hover effect for the card */
+}
+
+.converter-card:hover {
+	transform: translateY(-5px);
+	/* Lift card slightly on hover */
+}
+
+/* Card Header */
+.card-title {
+	font-size: 2.5em;
+	color: var(--primary-accent);
+	margin-bottom: var(--spacing-xs);
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-sm);
+}
+
+
+.tagline {
+	font-size: 1em;
+	color: var(--text-secondary);
+	margin-bottom: var(--spacing-lg);
+	font-weight: 300;
+	/* Lighter weight for a softer feel */
+}
+
+/* Form Styling */
+.conversion-form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-md);
+	/* Consistent spacing between form elements */
+}
+
+.input-group,
+.select-wrapper {
+	text-align: left;
+}
+
+label {
+	display: block;
+	font-size: 0.85em;
+	color: var(--text-secondary);
+	margin-bottom: var(--spacing-xs);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+input[type="number"],
+select {
+	width: 100%;
+	padding: var(--spacing-md);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-sm);
+	font-size: 1.05em;
+	color: var(--text-primary);
+	background-color: var(--background-light);
+	/* Slightly off-white for inputs */
+	transition: all 0.3s ease;
+	-webkit-appearance: none;
+	/* Remove default styling */
+	-moz-appearance: none;
+	appearance: none;
+}
+
+input[type="number"]::placeholder {
+	color: var(--text-light);
+	opacity: 0.8;
+}
+
+input[type="number"]:focus,
+select:focus {
+	border-color: var(--primary-accent);
+	box-shadow: 0 0 0 4px var(--focus-glow);
+	/* Softer, wider glow */
+	outline: none;
+	background-color: var(--card-bg);
+	/* White background on focus */
+}
+
+/* Custom select arrow */
+.select-wrapper {
+	position: relative;
+}
+
+.select-wrapper::after {
+	content: '▼';
+	font-size: 0.7em;
+	color: var(--text-secondary);
+	position: absolute;
+	right: var(--spacing-md);
+	top: calc(50% + var(--spacing-sm) / 2);
+	/* Adjusted for label height */
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+/* Select box row with Swap Button */
+.select-group {
+	display: flex;
+	align-items: flex-end;
+	/* Aligns content at the bottom */
+	gap: var(--spacing-sm);
+	margin-bottom: var(--spacing-sm);
+}
+
+.select-group>div {
+	flex: 1;
+	/* Makes select wrappers take equal space */
+}
+
+.swap-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1.8em;
+	/* Larger icon */
+	color: var(--text-secondary);
+	padding: var(--spacing-xs);
+	border-radius: 50%;
+	/* Circle shape */
+	transition: all 0.3s ease;
+	align-self: center;
+	/* Center vertically within the flex container */
+	/* Pushes it up to align better with input fields */
+	width: 40px;
+	/* Fixed width/height for circular button */
+	height: 40px;
+	display: flex;
+	margin-top: var(--spacing-md);
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	/* Subtle shadow */
+	background-color: var(--background-light);
+}
+
+.swap-button:hover {
+	color: var(--primary-accent);
+	background-color: #e6e9ed;
+	transform: scale(1.05) rotate(360deg);
+	/* Scale and full rotation */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.swap-button:active {
+	transform: scale(0.95);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Main Convert Button */
+.convert-button {
+	width: 100%;
+	padding: var(--spacing-md) var(--spacing-lg);
+	font-size: 1.15em;
+	background-color: var(--primary-accent);
+	color: white;
+	border: none;
+
+	border-radius: var(--radius-sm);
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+	font-weight: 600;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	/* A bit more formal */
+	box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+	/* Accentuated shadow */
+}
+
+.convert-button:hover {
+	background-color: var(--button-hover);
+	transform: translateY(-3px);
+	/* More pronounced lift */
+	box-shadow: 0 12px 25px rgba(108, 92, 231, 0.4);
+}
+
+.convert-button:active {
+	transform: translateY(0);
+	box-shadow: 0 4px 10px rgba(108, 92, 231, 0.2);
+}
+
+/* Footer note */
+.footer-note {
+	margin-top: var(--spacing-xl);
+	font-size: 0.8em;
+	color: var(--text-light);
+	line-height: 1.5;
+	font-weight: 300;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+	.converter-card {
+		padding: var(--spacing-lg);
+		border-radius: var(--radius-md);
+	}
+
+	.card-title {
+		font-size: 2em;
+	}
+
+	.tagline {
+		font-size: 0.9em;
+	}
+
+	.select-group {
+		flex-direction: column;
+		/* Stack selects on small screens */
+		align-items: stretch;
+		gap: var(--spacing-md);
+	}
+
+	.swap-button {
+		transform: rotate(90deg);
+		/* Rotate for vertical swap */
+		margin: 0 auto var(--spacing-md) auto;
+		/* Center button when stacked */
+	}
+
+	.swap-button:hover {
+		transform: scale(1.05) rotate(450deg);
+		/* Continue rotation */
+	}
+
+	body::before,
+	body::after {
+		width: 150px;
+		height: 150px;
+		filter: blur(15px);
+		/* Less blur on smaller screens */
+	}
+}
+
+@media (max-width: 400px) {
+	.converter-card {
+		padding: var(--spacing-md);
+	}
+
+	.card-title {
+		font-size: 1.8em;
+	}
+
+	.convert-button {
+		font-size: 1em;
+		padding: var(--spacing-md);
+	}
+}
